@@ -1,0 +1,22 @@
+# ===== DEPENDENCIES =====
+node_modules/
+
+# ===== ENVIRONMENT =====
+.env
+
+# ===== BUILD OUTPUT =====
+dist/
+build/
+
+# ===== LOGS =====
+logs/
+*.log
+
+# ===== OS FILES =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== EDITOR =====
+.vscode/
+.idea/
