@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path'); // ✅ ADD THIS
 
 const authRoutes = require('./src/routes/auth');
 const apiRoutes = require('./src/routes/apis');
@@ -20,16 +21,24 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/apis', apiRoutes);
 app.use('/api/keys', keyRoutes);
 
+// ✅ Serve React build
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// ✅ SPA fallback — replaces your old 404 handler
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+app.use(errorHandler);
+
 process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT:', err);
 });
-
-app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found' }));
-app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 mongoose
