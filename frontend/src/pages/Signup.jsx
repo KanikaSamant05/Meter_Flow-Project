@@ -42,7 +42,7 @@ export default function Signup() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className={label}>Full name</label>
-            <input type="text" className={input} placeholder="Jane Doe"
+            <input type="text" className={input} placeholder="Full Name"
               value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
           </div>
           <div>
